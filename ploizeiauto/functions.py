@@ -107,25 +107,27 @@ green = PWMLED(27)
 red = PWMLED(17)
 green_time = 0
 
-def parking():
+_parking_stop = Event()
+_parking_thread = None
 
-    while True:
+def _parking_loop():
 
-        if sensor.distance * 100 >= 51:
-            red.value = 0
-            green.value = 1
-            green_time += 1
-            print("Bereich seit ", green_time, " Sekunden frei")
-        elif sensor.distance * 100 > 15 and sensor.distance * 100 < 51:
-            red.value = 0
-            green.value = 0
-            red.blink(on_time=sensor.distance, off_time=sensor.distance)
-            green_time = 0
-            print("Hindernis erkannt")
+    while not _parking_stop.is_set():
+        cm = sensor.distance * 100
+
+        if cm >= 50:
+            red.off()
+            green.on()
+        elif cm >= 15:
+            green.off()
+            red.on()
+            _parking_stop.wait(cm / 100)
+            red.off()
+            _parking_stop.wait(cm / 100)
         else:
-            red.value = 1
-            green.value = 0
-            green_time = 0
+            green.off()
+            red.on()
+            _parking_stop.wait(0.3)
             print("Hindernis erkannt")
             
 # -------------------------
