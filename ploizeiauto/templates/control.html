@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Police Control | Last Resort</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+
+    </head>
+</html>
+
+<body>
+<header>
+
+<h1>Remote Control für die neue <span>Ford-Polizeiauto-Flotte</span></h1>
+
+<p class="einleitung">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+</header>
+
+<main>
+
+    <div class="control_area">
+
+        <form class="directions" method="post">
+
+            <button id="brake_button" type="button">Bremsen</button>
+
+            <script>
+
+                const brakeButton = document.getElementById("brake_button");
+
+                function sendCommand(url) {
+
+                    fetch(url, {
+                        method: "POST"
+                    });
+
+                }
+
+                    brakeButton.addEventListener("pointerdown", function(event) {
+                        event.preventDefault();
+
+                        brakeButton.setPointerCapture(event.pointerId);
+
+                        sendCommand("/brakelight/on");
+                    });
+
+                    brakeButton.addEventListener("pointerup", function() {
+                        sendCommand("/brakelight/off");
+
+                    });
+
+                    brakeButton.addEventListener("pointercancel", function() {
+
+                        sendCommand("brakelight/off");
+
+                    });
+            </script>
+
+            {% if not warnblink_activated %}
+            <button name="warnblink" value="warnblink">Warnblinker aktivieren</button>
+            {% else %}
+            <button name="warnblinamenk_off" value="warnblink_off">Warnblinker deaktivieren</button>
+            {% endif %}
+
+            {% if not blinker_links_activated %}
+            <button name="blinker_links" value="blinker_links">Blinker links aktivieren</button>
+            {% else %}
+            <button name="blinker_links_off" value="blinker_links_off">Blinker links deaktivieren</button>
+            {% endif %}
+
+            {% if not blinker_rechts_activated %}
+            <button name="blinker_rechts" value="blinker_rechts">Blinker rechts aktivieren</button>
+            {% else %}
+            <button name="blinker_rechts_off" value="blinker_rechts_off">Blinker rechts deaktivieren</button>
+            {% endif %}
+
+        </form>
+
+        <form class="lights">
+
+            {% if not blaulicht_activated %}
+            <button name="blaulicht" value="blaulicht">Blaulicht aktivieren</button>
+            {% else %}
+            <button name="blaulicht_off" value="blaulicht_off">Blaulicht deaktivieren</button>
+            {% endif %}
+
+            {% if not sirene_activated %}
+            <button name="sirene" value="sirene">Sirene aktivieren</button>
+            {% else %}
+            <button name="sirene_off" value="sirene_off">Sirene deaktivieren</button>
+            {% endif %}
+
+            {% if not tagfahrlicht_activated %}
+            <button name="tagfahrlicht" value="tagfahrlicht">Tagfahrlicht aktivieren</button>
+            {% else %}
+            <button name="tagfahrlicht_off" value="tagfahrlicht_off">Tagfahrlicht deaktivieren</button>
+            {% endif %}
+
+            {% if not scheinwerfer_activated %}
+            <button name="scheinwerfer" value="scheinwerfer">Scheinwerfer aktivieren</button>
+            {% else %}
+            <button name="scheinwerfer_off" value="scheinwerfer_off">Scheinwerfer deaktivieren</button>
+            {% endif %}
+
+        </form>
+
+    </div>
+
+    <div class="nfc_display">
+
+        {% if policecar_locked %}
+        <img src="#" alt="Icon policecar locked">
+        <h4>Poleizeiauto abgeschlossen</h4>
+        {% else %}
+        <img src="#" alt="Icon policecar unlocked">
+        <h4>Poleizeiauto geöffnet</h4>
+
+    </div>
+
+
+</main>
+
+<footer class="footer_area">
+
+    <div class="footer_logos">
+
+        <img src="#">
+        <img src="#">
+
+    </div>
+    
+    <small>Copyright FI16 - Last Resort</small>
+
+</footer>
+
+</body>
