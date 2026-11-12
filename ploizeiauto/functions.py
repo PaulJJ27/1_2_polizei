@@ -9,6 +9,8 @@ right_blue = PWMLED(17)
 left_blue = PWMLED(27)
 break_light = PWMLED(24)
 warn_light = PWMLED(5)
+turn_right = PWMLED(5)
+turn_left = PWMLED(5)
 
 
 # -------------------------
@@ -17,6 +19,8 @@ warn_light = PWMLED(5)
 
 def rear_light_on():
     rear_light.value = 0.2
+    while break_light.value == 1:
+        rear_light.value = 0.7
 
 def rear_light_off():
     rear_light.value = 0
@@ -83,6 +87,7 @@ def _blink_loop():
         left_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
         right_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
         sleep(0.1)
+
     left_blue.off()
     right_blue.off()
 
@@ -111,7 +116,6 @@ _parking_stop = Event()
 _parking_thread = None
 
 def _parking_loop():
-
     while not _parking_stop.is_set():
         cm = sensor.distance * 100
 
@@ -129,6 +133,36 @@ def _parking_loop():
             red.on()
             _parking_stop.wait(0.3)
             print("Hindernis erkannt")
+
+def parking_on():
+
+    global _parking_thread
+    if _parking_stop and _parking_stop.is_alive():
+        return
+    
+    _parking_stop.clear()
+    _parking_thread = Thread(target=_parking_loop, daemon=True)
+    _parking_thread.start()
+
+def parking_off():
+    _parking_stop.set()
+
+
+# -------------------------
+# turn signals left or right
+# -------------------------
+
+def turn_left_on():
+    turn_right.off()
+    turn_right.blink(on_time=0.5, off_time=0.5)
+
+def turn_right_on():
+    turn_left.off()
+    turn_right.blink(on_time=0.5, off_time=0.5)
+
+def turn_signal_off():
+    turn_right.off()
+    turn_left.off()
             
 # -------------------------
 # everything off
