@@ -4,12 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Police Control | Last Resort</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" href="../static/css/style.css" > <!-- href="{{ url_for('static', filename='css/style.css') }}" -->
 
     </head>
-</html>
-
-<body>
+    <body>
 <header>
 
 <h1>Remote Control für die neue <span>Ford-Polizeiauto-Flotte</span></h1>
@@ -122,6 +120,7 @@
         {% else %}
         <img src="#" alt="Icon policecar unlocked">
         <h4>Poleizeiauto geöffnet</h4>
+        {% endif %}
 
     </div>
 
@@ -142,3 +141,4 @@
 </footer>
 
 </body>
+</html>
