@@ -1,0 +1,41 @@
+/usr/bin/python /home/polizei04/Documents/Police_Car/ploizeiauto/functions.py
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/pi.py", line 411, in pin
+    pin = self.pins[info]
+          ~~~~~~~~~^^^^^^
+KeyError: PinInfo(number=26, name='GPIO7', names=frozenset({'GPIO7', 'J8:26', '7', 7, 'BOARD26', 'WPI11', 'BCM7'}), pull='', row=13, col=2, interfaces=frozenset({'smi', 'dpi', 'i2c', 'spi', 'uart', 'gpio'}))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/polizei04/Documents/Police_Car/ploizeiauto/functions.py", line 4, in <module>
+    import pin_config
+  File "/home/polizei04/Documents/Police_Car/ploizeiauto/pin_config.py", line 14, in <module>
+    reverse_light = PWMLED(7)
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 108, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/gpiozero/output_devices.py", line 392, in __init__
+    super().__init__(pin, active_high=active_high, initial_value=None,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     pin_factory=pin_factory)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/output_devices.py", line 74, in __init__
+    super().__init__(pin, pin_factory=pin_factory)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/mixins.py", line 75, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 553, in __init__
+    pin = self.pin_factory.pin(pin)
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/pi.py", line 413, in pin
+    pin = self.pin_class(self, info)
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/lgpio.py", line 126, in __init__
+    lgpio.gpio_claim_input(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        self.factory._handle, self._number, lgpio.SET_PULL_NONE)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 755, in gpio_claim_input
+    return _u2i(_lgpio._gpio_claim_input(handle&0xffff, lFlags, gpio))
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 458, in _u2i
+    raise error(error_text(v))
+lgpio.error: 'GPIO busy'
