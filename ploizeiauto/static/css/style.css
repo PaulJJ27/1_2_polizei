@@ -1,0 +1,77 @@
+/* Gesamter Bereich für beide Button-Gruppen */
+.control_area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Raute: Bremsen oben, Blinker links/rechts, Warnblinker Mitte, Rückwärts unten */
+.directions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 1rem;
+}
+
+/* Bremsen */
+.directions button:nth-of-type(1) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+/* Warnblinker */
+.directions button:nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Blinker links */
+.directions button:nth-of-type(3) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+/* Blinker rechts */
+.directions button:nth-of-type(4) {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* Rückwärtsgang */
+.directions button:nth-of-type(5) {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+/* Viereck: Blaulicht / Sirene oben, Tagfahrlicht / Scheinwerfer unten */
+.lights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 1rem;
+}
+
+/* Blaulicht: links oben */
+.lights button:nth-of-type(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+/* Sirene: rechts oben */
+.lights button:nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+/* Tagfahrlicht: links unten */
+.lights button:nth-of-type(3) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+/* Scheinwerfer: rechts unten */
+.lights button:nth-of-type(4) {
+    grid-column: 2;
+    grid-row: 2;
+}
