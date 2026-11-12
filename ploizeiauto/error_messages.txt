@@ -39,3 +39,17 @@ Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/lgpio.py", line 458, in _u2i
     raise error(error_text(v))
 lgpio.error: 'GPIO busy'
+
+
+2
+/usr/bin/python /home/polizei04/Documents/Police_Car/ploizeiauto/temp_functions.py
+/usr/lib/python3/dist-packages/gpiozero/input_devices.py:852: PWMSoftwareFallback: For more accurate readings, use the pigpio pin factory.See https://gpiozero.readthedocs.io/en/stable/api_input.html#distancesensor-hc-sr04 for more info
+  warnings.warn(PWMSoftwareFallback(
+/home/polizei04/.local/lib/python3.13/site-packages/mfrc522/MFRC522.py:150: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+  GPIO.setup(pin_rst, GPIO.OUT)
+Traceback (most recent call last):
+  File "/home/polizei04/Documents/Police_Car/ploizeiauto/temp_functions.py", line 67, in <module>
+    functions.parking_on()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/polizei04/Documents/Police_Car/ploizeiauto/functions.py", line 143, in parking_on
+    if _parking_stop and _parking_stop.is_alive():
