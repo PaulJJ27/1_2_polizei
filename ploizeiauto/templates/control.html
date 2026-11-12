@@ -76,6 +76,12 @@
             <button name="blinker_rechts_off" value="blinker_rechts_off">Blinker rechts deaktivieren</button>
             {% endif %}
 
+            {% if not backwards_button_activated %}
+            <button name="backwards_button" value="backwards_button">Rückwärtsgang einlegen</button>
+            {% else %}
+            <button name="backwards_button_off" value="backwards_button_off">Vorwärtsgang einlegen</button>
+            {% endif %}
+
         </form>
 
         <form class="lights">
