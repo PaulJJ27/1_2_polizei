@@ -122,6 +122,7 @@ def _parking_loop():
         if cm >= 50:
             red.off()
             green.on()
+            _parking_stop.wait(0.2)
         elif cm >= 15:
             green.off()
             red.on()
@@ -137,7 +138,7 @@ def _parking_loop():
 def parking_on():
 
     global _parking_thread
-    if _parking_stop and _parking_stop.is_alive():
+    if _parking_thread and _parking_thread.is_alive():
         return
     
     _parking_stop.clear()
