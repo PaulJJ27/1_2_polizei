@@ -1,4 +1,4 @@
-from gpiozero import LED, PWMLED, DistanceSensor
+from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
 from time import sleep
 from threading import Thread, Event
 
@@ -19,7 +19,7 @@ turn_left = PWMLED(5)
 
 def rear_light_on():
     rear_light.value = 0.2
-    while break_light.value == 1:
+    while break_light.value == 1:        # rear lights will be brighter if you press breaks
         rear_light.value = 0.7
 
 def rear_light_off():
@@ -163,6 +163,42 @@ def turn_right_on():
 def turn_signal_off():
     turn_right.off()
     turn_left.off()
+
+# -------------------------
+# headlights 
+# -------------------------
+
+light_sensor = DigitalInputDevice(26, pull_up=False)
+headlights = LED(5)
+
+# When too dark --> headlights will turn on by themselfes
+def headlights_auto_on():
+
+    # when light sensor is deactivated it gives '0' and headlights turn on automatically 
+    light_sensor.when_deactivated = headlights.on
+
+    # when light sensor is activated it gives '1' and headlights turn off automatically
+    light_sensor.when_activated = headlights.off
+
+    if light_sensor.value == 0:
+        headlights.on()
+    else:
+        headlights.off()
+
+# Function that will be used to turn off auto mode for headlights
+def headligths_auto_off():
+    light_sensor.when_deactivated = None
+    light_sensor.when_activated = None
+    headlights.off()
+
+def headlights_on():
+    headligths_auto_off()
+    headlights.on()
+
+def headlights_off():
+    headligths_auto_off()
+    headlights.off()
+
             
 # -------------------------
 # everything off
@@ -174,13 +210,6 @@ def turn_off():
     rear_light_off()
     break_light_off()
     day_light_off()
-
-
-if __name__ == "__main__":
-    try:
-        rear_light_on()
-        blue_light_on()
-        while True:
-            sleep(1)
-    except KeyboardInterrupt:
-        turn_off()
+    parking_off()
+    headligths_auto_off()
+    headlights_off()
