@@ -67,7 +67,7 @@ def control():
         elif "scheinwerfer_off" in request.form:
             functions.scheinwerfer_off()
 
-        
+        headlights_auto()
 
     return render_template(
         "control.html",
@@ -79,7 +79,7 @@ def control():
         tagfahrlicht_activated = functions.day_light_on.is_set(),
         scheinwerfer_activated = functions.scheinwerfer_deactivated,
         policecar_locked = functions.policecar_locked,
-        backwards_button_activated = functions.backwards_button.is_set()
+        reverse = functions.backwards_button.is_set()
         )
 
 

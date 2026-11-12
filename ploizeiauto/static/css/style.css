@@ -1,3 +1,78 @@
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+
+}
+
+:root{
+
+    --ford-dark: #003478;
+    --ford-bright: #3b8fc5;
+    --ford-med-bright: #1351D8;
+    --cyan-neon: #00e5ff;
+    --elektro: #00bfff;
+    --cyan_bright: #18ffff;
+    --cyan-intense: #00ffff;
+
+
+}
+
+html,
+body {
+
+    margin: 0;
+    width: 100%;
+    padding: 20px;
+
+}
+
+body {
+
+    min-height: 100vh;
+
+    background: radial-gradient(
+        circle at center,
+        /*var(--ford-bright) 10%,*/
+        var(--ford-bright) 1%,
+        var(--ford-med-bright) 30%,
+        var(--ford-dark) 80%
+    );
+    color: white;
+
+}
+
+main,
+.control_area {
+
+    width: 100%;
+    max-width: 100%;
+
+}
+
+header {
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+h1 {
+
+    text-align: center;
+
+}
+
+.einleitung {
+
+    text-align: center;
+
+}
+
+
 /* Gesamter Bereich für beide Button-Gruppen */
 .control_area {
     display: flex;
@@ -6,40 +81,67 @@
     gap: 2rem;
 }
 
+.directions button,
+.lights button {
+
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    background-color: var(--elektro);
+    border: 1px solid var(--cyan-intense);
+    border-radius: 15px;
+    color: white;
+}
+
+/*
+.directions button:hover,
+.lights button:hover {
+
+    color: inherit;
+    background-color: var(--cyan-neon);
+
+}
+*/
+
 /* Raute: Bremsen oben, Blinker links/rechts, Warnblinker Mitte, Rückwärts unten */
 .directions {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(3, auto);
-    gap: 1rem;
+    gap: 0.5rem;
+
+    width: 100%;
+    max-width: 32rem;
+    padding-inline: 0.75rem;
 }
 
 /* Bremsen */
-.directions button:nth-of-type(1) {
+.directions .brake {
     grid-column: 2;
     grid-row: 1;
 }
 
 /* Warnblinker */
-.directions button:nth-of-type(2) {
+.directions .warnblink {
     grid-column: 2;
     grid-row: 2;
 }
 
 /* Blinker links */
-.directions button:nth-of-type(3) {
+.directions .blink_left {
     grid-column: 1;
     grid-row: 2;
 }
 
 /* Blinker rechts */
-.directions button:nth-of-type(4) {
+.directions .blink_right {
     grid-column: 3;
     grid-row: 2;
 }
 
 /* Rückwärtsgang */
-.directions button:nth-of-type(5) {
+.directions .reverse {
     grid-column: 2;
     grid-row: 3;
 }
@@ -47,31 +149,53 @@
 /* Viereck: Blaulicht / Sirene oben, Tagfahrlicht / Scheinwerfer unten */
 .lights {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(2, auto);
-    gap: 1rem;
+    gap: 0.5rem;
+
+    width: 100%;
+    max-width: 32rem;
+    padding-inline: 0.75rem;
 }
 
 /* Blaulicht: links oben */
-.lights button:nth-of-type(1) {
+.lights .blue_light {
     grid-column: 1;
     grid-row: 1;
 }
 
 /* Sirene: rechts oben */
-.lights button:nth-of-type(2) {
+.lights .siren {
     grid-column: 2;
     grid-row: 1;
 }
 
 /* Tagfahrlicht: links unten */
-.lights button:nth-of-type(3) {
+.lights .daylight {
     grid-column: 1;
     grid-row: 2;
 }
 
 /* Scheinwerfer: rechts unten */
-.lights button:nth-of-type(4) {
+.lights .spotlight {
     grid-column: 2;
     grid-row: 2;
+}
+
+.nfc_display {
+
+display: flex;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+
+}
+
+footer {
+
+display: flex;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+
 }
