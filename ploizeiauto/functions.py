@@ -180,7 +180,8 @@ def headlights_auto_on():
 
     # when light sensor is activated it gives '1' and headlights turn off automatically
     light_sensor.when_activated = headlights.off
-
+    
+    # it will check if its already dark or bright (needed for the first check)
     if light_sensor.value == 0:
         headlights.on()
     else:
