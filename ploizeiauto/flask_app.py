@@ -7,12 +7,12 @@ app = Flask(__name__)
 
 @app.post("/brakelight/an")
 def brake_light_on():
-    functions.break_light_on()
+    functions.brakes_light_on()
     return "", 204
 
 @app.post("/brakelight/off")
 def brake_light_off():
-    functions.break_light_off()
+    functions.brakes_light_off()
     return "", 204
 
 @app.route('/', methods=["GET", "POST"])
@@ -20,10 +20,10 @@ def control():
 
     if request.method == "POST":
         if "warnblink" in request.form:
-            if not functions.warn_light_on.is_set():
+            if not functions._warn_light_thread is not None and functions._warn_light_thread.is_alive():
                 functions.warn_light_on()
         elif "warnblink_off" in request.form:
-            functions.warn_licht_off()
+            functions.warn_light_off()
 
         elif "blinker_links" in request.form:
             if not functions.is_turn_left_on == True:
@@ -46,7 +46,7 @@ def control():
 
 
         elif "blaulicht" in request.form:
-            if not functions.blue_light_on.is_set():
+            if not functions._blue_light_thread is not None and functions._blue_light_thread.is_alive():
                 functions.blue_light_on()
         elif "blaulicht_off" in request.form:
             functions.blue_light_off()
@@ -60,7 +60,7 @@ def control():
  
 
         elif "tagfahrlicht" in request.form:
-            if not functions.day_light_on.is_set():
+            if not functions.is_daylight_on:
                 functions.day_light_on()
         elif "tagfahrlicht_off" in request.form:
             functions.day_light_off()
@@ -72,7 +72,7 @@ def control():
             functions.headlights_off()
 
         functions.headlights_auto_on()
-        functions.headligths_auto_off()
+        functions.headlights_auto_off()
 
     return render_template(
         "control.html",
@@ -89,5 +89,5 @@ def control():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=5000, debug=False)
 
