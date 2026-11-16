@@ -7,33 +7,57 @@ rear_light = PWMLED(22)
 day_light = PWMLED(23) 
 right_blue = PWMLED(17) 
 left_blue = PWMLED(27)
-break_light = PWMLED(24)
+brakes_light = PWMLED(24)
 warn_light = PWMLED(5)
 turn_right = PWMLED(5)
 turn_left = PWMLED(5)
+back_driving_lights = PWMLED(5)
 
+# -------------------------
+# back driving lights
+# -------------------------
+
+def back_driving_lights_on():
+    back_driving_lights.value = 1
+
+def back_driving_lights_off():
+    back_driving_lights.value = 0
 
 # -------------------------
 # rear lights
 # -------------------------
 
-def rear_light_on():
-    rear_light.value = 0.2
-    while break_light.value == 1:        # rear lights will be brighter if you press breaks
-        rear_light.value = 0.7
+_rear_on = False
+_brakes = False
 
+def rear_light_on():
+    global _rear_on
+    _rear_on = True
+    _rear_update()
+    
 def rear_light_off():
     rear_light.value = 0
 
+def _rear_update():                     # It will be possible to make rear lights brighter
+    if not _rear_on:                    # when brakes are pressed
+        rear_light.value = 0
+    elif _brakes:
+        rear_light.value = 1
+    else:
+        rear_light.value = 0.6
+        
 # -------------------------
-# break light
+# brakes light
 # -------------------------
 
-def break_light_on():
-    break_light.value = 1
+def brakes_light_on():
+    global _brakes
+    _brakes = True
+    brakes_light.value = 1
+    _rear_update()
 
-def break_light_off():
-    break_light.value = 0
+def brakes_light_off():
+    brakes_light.value = 0
 
 # -------------------------
 # day lights
@@ -61,15 +85,15 @@ def _warn_light_loop():
     warn_light.off()
 
 def warn_light_on():
-    global _warn_licht_thread
+    global _warn_light_thread
     if _warn_light_thread and _warn_light_thread.is_alive():
         return
 
     _warn_light_stop.clear()
-    _warn_licht_thread = Thread(target=_warn_light_loop, daemon=True)
-    _warn_licht_thread.start()
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
+    _warn_light_thread.start()
 
-def warn_licht_off():
+def warn_light_off():
     _warn_light_stop.set()
 
 # -------------------------
@@ -180,7 +204,8 @@ def headlights_auto_on():
 
     # when light sensor is activated it gives '1' and headlights turn off automatically
     light_sensor.when_activated = headlights.off
-
+    
+    # it will check if its already dark or bright (needed for the first check)
     if light_sensor.value == 0:
         headlights.on()
     else:
@@ -207,9 +232,9 @@ def headlights_off():
 
 def turn_off():
     blue_light_off()
-    warn_licht_off()
+    warn_light_off()
     rear_light_off()
-    break_light_off()
+    brakes_light_off()
     day_light_off()
     parking_off()
     headligths_auto_off()
