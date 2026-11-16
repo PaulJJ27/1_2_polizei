@@ -11,7 +11,17 @@ break_light = PWMLED(24)
 warn_light = PWMLED(5)
 turn_right = PWMLED(5)
 turn_left = PWMLED(5)
+back_driving_lights = PWMLED(5)
 
+# -------------------------
+# rear lights
+# -------------------------
+
+def back_driving_lights_on():
+    back_driving_lights.value = 1
+
+def back_driving_lights_off():
+    back_driving_lights.value = 0
 
 # -------------------------
 # rear lights
