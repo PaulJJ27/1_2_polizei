@@ -106,14 +106,15 @@ def _warn_light_loop():
     turn_left.off()
 
 def warn_light_on():
-    global _warn_licht_thread
+    global _warn_light_thread
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     if _warn_light_thread and _warn_light_thread.is_alive():
         return
 
     _warn_light_stop.clear()
-    _warn_licht_thread = Thread(target=_warn_light_loop, daemon=True)
-    _warn_licht_thread.start()
+    _warn_light_thread.start()
     print("Warnblinker an")
+    
 
 def warn_licht_off():
     _warn_light_stop.set()
@@ -128,15 +129,16 @@ _blue_light_thread = None
 
 def _blink_loop():
     while not _blue_light_stop.is_set():
-        pin_config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=True)
-        pin_config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=True)
+        config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=True)
+        config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=True)
         sleep(0.5)
-        pin_config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=False)
-        pin_config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=False)
+        config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=False)
+        config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=False)
         sleep(0.1)
 
-    pin_config.blue_left.off()
-    pin_config.blue_right.off()
+    config.blue_left.off()
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
+    config.blue_right.off()
 
 def blue_light_on():
     global _blue_light_thread
@@ -311,7 +313,7 @@ def turn_off():
     is_headlights_on = False
 
 
----------------------
+#---------------------
 _rear_on = False
 _brakes = False
 
@@ -338,8 +340,8 @@ def _rear_update():                     # It will be possible to make rear light
 def brakes_light_on():
     global _brakes
     _brakes = True
-    brakes_light.value = 1
+    break_lights.value = 1
     _rear_update()
 
 def brakes_light_off():
-    brakes_light.value = 0
+    break_lights.value = 0
