@@ -1,17 +1,22 @@
 from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
 from time import sleep
 from threading import Thread, Event
+import config
 
 
-rear_light = PWMLED(22) 
-day_light = PWMLED(23) 
-right_blue = PWMLED(17) 
-left_blue = PWMLED(27)
-break_light = PWMLED(24)
-warn_light = PWMLED(3)
-turn_right = PWMLED(2)
-turn_left = PWMLED(1)
-back_driving_lights = PWMLED(19)
+
+
+
+rear_light = config.rear_lights
+day_light = config.day_lights
+right_blue = config.blue_right 
+left_blue = config.blue_left
+break_lights = config.break_light
+turn_right = config.blink_right
+turn_left = config.blink_left
+back_driving_lights = config.reverse_lights
+light_sensor = config.day_light_sensor
+headlights = config.front_lights
 
 # -------------------------
 # back_driving lights
@@ -53,13 +58,13 @@ is_brake_light_on = False
 
 def break_light_on():
     global is_brake_light_on
-    break_light.value = 1
+    break_lights.value = 1
     is_brake_light_on = True
     print("Bremslicht an")
 
 def break_light_off():
     global is_brake_light_on
-    break_light.value = 0
+    break_lights.value = 0
     is_brake_light_on = False
     print("Bremslicht aus")
 
@@ -91,11 +96,14 @@ _warn_light_thread = None
 
 def _warn_light_loop():
     while not _warn_light_stop.is_set():
-        warn_light.on()
+        turn_right.on()
+        turn_left.on()
         sleep(0.5)
-        warn_light.off()
+        turn_right.off()
+        turn_left.off()
         sleep(0.5)
-    warn_light.off()
+    turn_right.off()
+    turn_left.off()
 
 def warn_light_on():
     global _warn_licht_thread
@@ -225,8 +233,7 @@ def turn_signal_off():
 # headlights 
 # -------------------------
 
-light_sensor = DigitalInputDevice(26, pull_up=False)
-headlights = LED(27)
+
 is_headlights_on = False
 
 # When too dark --> headlights will turn on by themselfes
