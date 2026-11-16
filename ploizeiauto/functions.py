@@ -307,3 +307,37 @@ def turn_off():
     is_turn_left_on = False
     is_turn_right_on = False
     is_headlights_on = False
+
+
+---------------------
+_rear_on = False
+_brakes = False
+
+def rear_light_on():
+    global _rear_on
+    _rear_on = True
+    _rear_update()
+    
+def rear_light_off():
+    rear_light.value = 0
+
+def _rear_update():                     # It will be possible to make rear lights brighter
+    if not _rear_on:                    # when brakes are pressed
+        rear_light.value = 0
+    elif _brakes:
+        rear_light.value = 1
+    else:
+        rear_light.value = 0.6
+        
+# -------------------------
+# brakes light
+# -------------------------
+
+def brakes_light_on():
+    global _brakes
+    _brakes = True
+    brakes_light.value = 1
+    _rear_update()
+
+def brakes_light_off():
+    brakes_light.value = 0
