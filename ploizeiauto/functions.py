@@ -1,5 +1,4 @@
 from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
-from time import sleep
 from threading import Thread, Event
 
 
@@ -8,13 +7,13 @@ day_light = PWMLED(23)
 right_blue = PWMLED(17) 
 left_blue = PWMLED(27)
 brakes_light = PWMLED(24)
-warn_light = PWMLED(6)
+warn_light = PWMLED(5)
 turn_right = PWMLED(5)
-turn_left = PWMLED(2)
-back_driving_lights = PWMLED(1)
+turn_left = PWMLED(5)
+back_driving_lights = PWMLED(5)
 
 # -------------------------
-# back driving lights
+# rear lights
 # -------------------------
 
 def back_driving_lights_on():
@@ -36,7 +35,9 @@ def rear_light_on():
     _rear_update()
     
 def rear_light_off():
-    rear_light.value = 0
+    global _rear_on
+    _rear_on = False
+    _rear_update()
 
 def _rear_update():                     # It will be possible to make rear lights brighter
     if not _rear_on:                    # when brakes are pressed
@@ -45,7 +46,7 @@ def _rear_update():                     # It will be possible to make rear light
         rear_light.value = 1
     else:
         rear_light.value = 0.6
-        
+
 # -------------------------
 # brakes light
 # -------------------------
@@ -57,7 +58,10 @@ def brakes_light_on():
     _rear_update()
 
 def brakes_light_off():
+    global _brakes
+    _brakes = False
     brakes_light.value = 0
+    _rear_update()
 
 # -------------------------
 # day lights
@@ -79,9 +83,9 @@ _warn_light_thread = None
 def _warn_light_loop():
     while not _warn_light_stop.is_set():
         warn_light.on()
-        sleep(0.5)
+        _warn_light_stop.wait(0.5)
         warn_light.off()
-        sleep(0.5)
+        _warn_light_stop.wait(0.5)
     warn_light.off()
 
 def warn_light_on():
@@ -107,10 +111,10 @@ def _blink_loop():
     while not _blue_light_stop.is_set():
         left_blue.blink(on_time=0.1, off_time=0.05, n=2, background=True)
         right_blue.blink(on_time=0.1, off_time=0.05, n=2, background=True)
-        sleep(0.5)
+        _blue_light_stop.wait(0.5)
         left_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
         right_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
-        sleep(0.1)
+        _blue_light_stop.wait(0.1)
 
     left_blue.off()
     right_blue.off()
@@ -159,6 +163,9 @@ def _parking_loop():
             _parking_stop.wait(0.3)
             print("Hindernis erkannt")
 
+    green.off()
+    red.off()
+
 def parking_on():
 
     global _parking_thread
@@ -179,7 +186,7 @@ def parking_off():
 
 def turn_left_on():
     turn_right.off()
-    turn_right.blink(on_time=0.5, off_time=0.5)
+    turn_left.blink(on_time=0.5, off_time=0.5)
 
 def turn_right_on():
     turn_left.off()
@@ -212,17 +219,17 @@ def headlights_auto_on():
         headlights.off()
 
 # Function that will be used to turn off auto mode for headlights
-def headligths_auto_off():
+def headlights_auto_off():
     light_sensor.when_deactivated = None
     light_sensor.when_activated = None
     headlights.off()
 
 def headlights_on():
-    headligths_auto_off()
+    headlights_auto_off()
     headlights.on()
 
 def headlights_off():
-    headligths_auto_off()
+    headlights_auto_off()
     headlights.off()
 
             
@@ -237,5 +244,7 @@ def turn_off():
     brakes_light_off()
     day_light_off()
     parking_off()
-    headligths_auto_off()
+    headlights_auto_off()
     headlights_off()
+    turn_signal_off()
+    back_driving_lights_off()
