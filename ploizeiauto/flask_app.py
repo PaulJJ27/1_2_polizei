@@ -76,7 +76,7 @@ def control():
 
     return render_template(
         "control.html",
-        warnblink_activated = functions._warn_licht_thread.is_alive(),
+        warnblink_activated = functions._warn_light_thread.is_alive(),
         blinker_links_activated = functions.is_turn_left_on == True,
         blinker_rechts_activated = functions.is_turn_right_on == True,
         blaulicht_activated = functions._blue_light_thread.is_alive(),
@@ -89,5 +89,5 @@ def control():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000)
 

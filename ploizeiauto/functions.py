@@ -106,14 +106,15 @@ def _warn_light_loop():
     turn_left.off()
 
 def warn_light_on():
-    global _warn_licht_thread
+    global _warn_light_thread
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     if _warn_light_thread and _warn_light_thread.is_alive():
         return
 
     _warn_light_stop.clear()
-    _warn_licht_thread = Thread(target=_warn_light_loop, daemon=True)
-    _warn_licht_thread.start()
+    _warn_light_thread.start()
     print("Warnblinker an")
+    
 
 def warn_licht_off():
     _warn_light_stop.set()
