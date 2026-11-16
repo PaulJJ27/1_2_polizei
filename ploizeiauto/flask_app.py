@@ -26,34 +26,38 @@ def control():
             functions.warn_licht_off()
 
         elif "blinker_links" in request.form:
-            if not functions.blinker_links_on.is_set():
-                functions.blinker_links_on()
+            if not functions.is_turn_left_on == True:
+                functions.turn_left_on()
         elif "blinker_links_off" in request.form:
-            functions.blinker_links_off()
+            functions.turn_signal_off()
 
         elif "blinker_rechts" in request.form:
-            if not functions.blinker_rechts_on.is_set():
-                functions.blinker_rechts_on()
+            if not functions.is_turn_right_on == True:
+                functions.turn_right_on()
         elif "blinker_rechts_off" in request.form:
-            functions.blinker_rechts_off()
+            functions.turn_signal_off()
+            
+        
+        #elif "backwards_button" in request.form:
+            #if not functions.backwards_on.is_set():
+                #functions.backwards_on()
+        #elif "backwards_button_off" in request.form:
+            #functions.backwards.off()
 
-        elif "backwards_button" in request.form:
-            if not functions.backwards_on.is_set():
-                functions.backwards_on()
-        elif "backwards_button_off" in request.form:
-            functions.backwards.off()
 
         elif "blaulicht" in request.form:
             if not functions.blue_light_on.is_set():
                 functions.blue_light_on()
         elif "blaulicht_off" in request.form:
             functions.blue_light_off()
+        
 
-        elif "sirene" in request.form:
-            if not functions.sirene_on.is_set():
-                functions.sirene_on()
-        elif "sirene_off" in request.form:
-            functions.sirene_off()
+        #elif "sirene" in request.form:
+            #if not functions.sirene_on.is_set():
+                #functions.sirene_on()
+        #elif "sirene_off" in request.form:
+            #functions.sirene_off()
+ 
 
         elif "tagfahrlicht" in request.form:
             if not functions.day_light_on.is_set():
@@ -62,24 +66,25 @@ def control():
             functions.day_light_off()
 
         elif "scheinwerfer" in request.form:
-            if not functions.scheinwerfer_on.is_set():
-                functions.scheinwerfer_on()
+            if not functions.is_headlights_on == True:
+                functions.headlights_on()
         elif "scheinwerfer_off" in request.form:
-            functions.scheinwerfer_off()
+            functions.headlights_off()
 
-        
+        functions.headlights_auto_on()
+        functions.headligths_auto_off()
 
     return render_template(
         "control.html",
-        warnblink_activated = functions.day_light_on.is_set(),
-        blinker_links_activated = functions.blinker_links_deactivated,
-        blinker_rechts_activated = functions.blinker_rechts_deactivated,
-        blaulicht_activated = functions.blue_light_on.is_set(),
-        sirene_activated = functions.sirene_deactivated,
+        warnblink_activated = functions._warn_licht_thread.is_alive(),
+        blinker_links_activated = functions.is_turn_left_on == True,
+        blinker_rechts_activated = functions.is_turn_right_on == True,
+        blaulicht_activated = functions._blue_light_thread.is_alive(),
+        #sirene_activated = functions.sirene_deactivated,##### Not done
         tagfahrlicht_activated = functions.day_light_on.is_set(),
-        scheinwerfer_activated = functions.scheinwerfer_deactivated,
-        policecar_locked = functions.policecar_locked,
-        backwards_button_activated = functions.backwards_button.is_set()
+        scheinwerfer_activated = functions.is_headlights_on == True,
+        #policecar_locked = functions.policecar_locked,
+        #reverse = functions.backwards_button.is_set()
         )
 
 

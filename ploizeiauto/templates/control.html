@@ -22,7 +22,7 @@
 
         <form class="directions" method="post">
 
-            <button id="brake_button" type="button">Bremsen</button>
+            <button class="brake" id="brake_button" type="button">Bremsen</button>
 
             <script>
 
@@ -57,27 +57,27 @@
             </script>
 
             {% if not warnblink_activated %}
-            <button name="warnblink" value="warnblink">Warnblinker aktivieren</button>
+            <button class="warnblink" name="warnblink" value="warnblink">Warnblinker aktivieren</button>
             {% else %}
-            <button name="warnblinamenk_off" value="warnblink_off">Warnblinker deaktivieren</button>
+            <button class="warnblink" name="warnblinamenk_off" value="warnblink_off">Warnblinker deaktivieren</button>
             {% endif %}
 
             {% if not blinker_links_activated %}
-            <button name="blinker_links" value="blinker_links">Blinker links aktivieren</button>
+            <button class="blink_left" name="blinker_links" value="blinker_links">Blinker links aktivieren</button>
             {% else %}
-            <button name="blinker_links_off" value="blinker_links_off">Blinker links deaktivieren</button>
+            <button class="blink_left" name="blinker_links_off" value="blinker_links_off">Blinker links deaktivieren</button>
             {% endif %}
 
             {% if not blinker_rechts_activated %}
-            <button name="blinker_rechts" value="blinker_rechts">Blinker rechts aktivieren</button>
+            <button class="blink_right" name="blinker_rechts" value="blinker_rechts">Blinker rechts aktivieren</button>
             {% else %}
-            <button name="blinker_rechts_off" value="blinker_rechts_off">Blinker rechts deaktivieren</button>
+            <button class="blink_right" name="blinker_rechts_off" value="blinker_rechts_off">Blinker rechts deaktivieren</button>
             {% endif %}
 
             {% if not backwards_button_activated %}
-            <button name="backwards_button" value="backwards_button">Rückwärtsgang einlegen</button>
+            <button class="reverse" name="reverse" value="reverse">Rückwärtsgang einlegen</button>
             {% else %}
-            <button name="backwards_button_off" value="backwards_button_off">Vorwärtsgang einlegen</button>
+            <button class="reverse" name="drive" value="drive">Vorwärtsgang einlegen</button>
             {% endif %}
 
         </form>
@@ -85,27 +85,27 @@
         <form class="lights">
 
             {% if not blaulicht_activated %}
-            <button name="blaulicht" value="blaulicht">Blaulicht aktivieren</button>
+            <button class="blue_light" name="blaulicht" value="blaulicht">Blaulicht aktivieren</button>
             {% else %}
-            <button name="blaulicht_off" value="blaulicht_off">Blaulicht deaktivieren</button>
+            <button class="blue_light" name="blaulicht_off" value="blaulicht_off">Blaulicht deaktivieren</button>
             {% endif %}
 
             {% if not sirene_activated %}
-            <button name="sirene" value="sirene">Sirene aktivieren</button>
+            <button class="siren" name="sirene" value="sirene">Sirene aktivieren</button>
             {% else %}
-            <button name="sirene_off" value="sirene_off">Sirene deaktivieren</button>
+            <button class="siren" name="sirene_off" value="sirene_off">Sirene deaktivieren</button>
             {% endif %}
 
             {% if not tagfahrlicht_activated %}
-            <button name="tagfahrlicht" value="tagfahrlicht">Tagfahrlicht aktivieren</button>
+            <button class="daylight" name="tagfahrlicht" value="tagfahrlicht">Tagfahrlicht aktivieren</button>
             {% else %}
-            <button name="tagfahrlicht_off" value="tagfahrlicht_off">Tagfahrlicht deaktivieren</button>
+            <button class="daylight" name="tagfahrlicht_off" value="tagfahrlicht_off">Tagfahrlicht deaktivieren</button>
             {% endif %}
 
             {% if not scheinwerfer_activated %}
-            <button name="scheinwerfer" value="scheinwerfer">Scheinwerfer aktivieren</button>
+            <button class="spotlight" name="scheinwerfer" value="scheinwerfer">Scheinwerfer aktivieren</button>
             {% else %}
-            <button name="scheinwerfer_off" value="scheinwerfer_off">Scheinwerfer deaktivieren</button>
+            <button class="spotlight" name="scheinwerfer_off" value="scheinwerfer_off">Scheinwerfer deaktivieren</button>
             {% endif %}
 
         </form>

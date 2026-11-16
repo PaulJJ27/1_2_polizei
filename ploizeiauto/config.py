@@ -1,5 +1,4 @@
-from gpiozero import PWMLED, LED, DistanceSensor, Buzzer
-import mfrc522
+from gpiozero import PWMLED, LED, DistanceSensor, Buzzer, DigitalInputDevice
 
 buzzer = 21
 
@@ -12,7 +11,7 @@ blink_right = PWMLED(23)
 break_light = PWMLED(13)
 rear_lights = PWMLED(12)
 reverse_lights = PWMLED(7)
+day_light_sensor = DigitalInputDevice(22, pull_up=False)
 
-dist_sensor = DistanceSensor(Echo=6, trigger=5)
+dist_sensor = DistanceSensor(echo=6, trigger=5)
 
-reader = mfrc522.MFRC522()
