@@ -1,4 +1,4 @@
-from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
+from gpiozero import LED, PWMLED, DistanceSensor
 from time import sleep
 from threading import Thread, Event
 import config
@@ -128,15 +128,15 @@ _blue_light_thread = None
 
 def _blink_loop():
     while not _blue_light_stop.is_set():
-        left_blue.blink(on_time=0.1, off_time=0.05, n=2, background=True)
-        right_blue.blink(on_time=0.1, off_time=0.05, n=2, background=True)
+        pin_config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=True)
+        pin_config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=True)
         sleep(0.5)
-        left_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
-        right_blue.blink(on_time=0.1, off_time=0.05, n=2, background=False)
+        pin_config.blue_left.blink(on_time=0.1, off_time=0.05, n=2, background=False)
+        pin_config.blue_right.blink(on_time=0.1, off_time=0.05, n=2, background=False)
         sleep(0.1)
 
-    left_blue.off()
-    right_blue.off()
+    pin_config.blue_left.off()
+    pin_config.blue_right.off()
 
 def blue_light_on():
     global _blue_light_thread
@@ -165,23 +165,25 @@ _parking_thread = None
 
 def _parking_loop():
     while not _parking_stop.is_set():
-        cm = sensor.distance * 100
-
+        cm = pin_config.dist_sensor.distance * 100
+        #print(cm)
         if cm >= 50:
             red.off()
             green.on()
-            _parking_stop.wait(0.2)
+            sleep(0.5)
+            #print("meow")
         elif cm >= 15:
             green.off()
             red.on()
             _parking_stop.wait(cm / 100)
             red.off()
             _parking_stop.wait(cm / 100)
+            #print("Hindernis erkannt")
         else:
             green.off()
             red.on()
             _parking_stop.wait(0.3)
-            print("Hindernis erkannt")
+            #print("Hindernis erkannt")
 
 def parking_on():
 
