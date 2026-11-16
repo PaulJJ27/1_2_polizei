@@ -8,10 +8,10 @@ day_light = PWMLED(23)
 right_blue = PWMLED(17) 
 left_blue = PWMLED(27)
 brakes_light = PWMLED(24)
-warn_light = PWMLED(5)
+warn_light = PWMLED(6)
 turn_right = PWMLED(5)
-turn_left = PWMLED(5)
-back_driving_lights = PWMLED(5)
+turn_left = PWMLED(2)
+back_driving_lights = PWMLED(1)
 
 # -------------------------
 # back driving lights

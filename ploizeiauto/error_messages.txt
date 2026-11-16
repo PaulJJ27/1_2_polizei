@@ -53,3 +53,69 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~~~~~~~~^^
   File "/home/polizei04/Documents/Police_Car/ploizeiauto/functions.py", line 143, in parking_on
     if _parking_stop and _parking_stop.is_alive():
+
+
+
+
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/pi.py", line 411, in pin
+    pin = self.pins[info]
+          ~~~~~~~~~^^^^^^
+KeyError: PinInfo(number=38, name='GPIO20', names=frozenset({'20', 'BCM20', 'J8:38', 20, 'GPIO20', 'WPI28', 'BOARD38'}), pull='', row=19, col=2, interfaces=frozenset({'', 'dpi', 'spi', 'gpio', 'pcm'}))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/polizei03/Documents/Ohm Rechner/raspi basic/ploizeiauto/1_2_polizei/ploizeiauto/flask_app.py", line 2, in <module>
+    import functions
+  File "/home/polizei03/Documents/Ohm Rechner/raspi basic/ploizeiauto/1_2_polizei/ploizeiauto/functions.py", line 4, in <module>
+    import config
+  File "/home/polizei03/Documents/Ohm Rechner/raspi basic/ploizeiauto/1_2_polizei/ploizeiauto/config.py", line 5, in <module>
+    day_lights = PWMLED(20)
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 108, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/gpiozero/output_devices.py", line 392, in __init__
+    super().__init__(pin, active_high=active_high, initial_value=None,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     pin_factory=pin_factory)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/output_devices.py", line 74, in __init__
+    super().__init__(pin, pin_factory=pin_factory)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/mixins.py", line 75, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 553, in __init__
+    pin = self.pin_factory.pin(pin)
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/pi.py", line 413, in pin
+    pin = self.pin_class(self, info)
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/lgpio.py", line 126, in __init__
+    lgpio.gpio_claim_input(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        self.factory._handle, self._number, lgpio.SET_PULL_NONE)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 755, in gpio_claim_input
+    return _u2i(_lgpio._gpio_claim_input(handle&0xffff, lFlags, gpio))
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 458, in _u2i
+    raise error(error_text(v))
+lgpio.error: 'GPIO busy'
+Exception ignored in atexit callback <function _shutdown at 0x7f9ff03d80>:
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 631, in _shutdown
+    _devices_shutdown()
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 624, in _devices_shutdown
+    dev.close()
+  File "/usr/lib/python3/dist-packages/gpiozero/mixins.py", line 265, in close
+    super().close()
+  File "/usr/lib/python3/dist-packages/gpiozero/devices.py", line 572, in close
+    self._pin.close()
+  File "/usr/lib/python3/dist-packages/gpiozero/pins/lgpio.py", line 133, in close
+    lgpio.gpio_claim_input(
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 755, in gpio_claim_input
+    return _u2i(_lgpio._gpio_claim_input(handle&0xffff, lFlags, gpio))
+  File "/usr/lib/python3/dist-packages/lgpio.py", line 458, in _u2i
+    raise error(error_text(v))
+lgpio.error: 'GPIO busy'
+polizei03@polizei03:~/Documents/Ohm Rechner/raspi basic/ploizeiauto/1_2_polizei/ploizeiauto $ 
