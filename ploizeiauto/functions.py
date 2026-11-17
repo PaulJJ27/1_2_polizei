@@ -11,6 +11,8 @@ warn_light = PWMLED(5)
 turn_right = PWMLED(5)
 turn_left = PWMLED(5)
 back_driving_lights = PWMLED(5)
+light_sensor = DigitalInputDevice(26, pull_up=False)
+headlights = LED(5)
 
 # -------------------------
 # rear lights
@@ -184,27 +186,40 @@ def parking_off():
 # turn signals left or right
 # -------------------------
 
+_turn_left_active = False
+_turn_right_active = False
+
 def turn_left_on():
+    global _turn_left_active, _turn_right_active
     turn_right.off()
+    _turn_right_active = False
     turn_left.blink(on_time=0.5, off_time=0.5)
+    _turn_left_active = True
 
 def turn_right_on():
+    global _turn_left_active, _turn_right_active
     turn_left.off()
+    _turn_left_active = False
     turn_right.blink(on_time=0.5, off_time=0.5)
+    _turn_right_active = True
 
 def turn_signal_off():
+    global _turn_left_active, _turn_right_active
     turn_right.off()
     turn_left.off()
+    _turn_left_active = False
+    _turn_right_active = False
 
 # -------------------------
 # headlights 
 # -------------------------
 
-light_sensor = DigitalInputDevice(26, pull_up=False)
-headlights = LED(5)
+_headlights_auto = False
 
 # When too dark --> headlights will turn on by themselfes
 def headlights_auto_on():
+    global _headlights_auto
+    _headlights_auto = True
 
     # when light sensor is deactivated it gives '0' and headlights turn on automatically 
     light_sensor.when_deactivated = headlights.on
@@ -220,6 +235,8 @@ def headlights_auto_on():
 
 # Function that will be used to turn off auto mode for headlights
 def headlights_auto_off():
+    global _headlights_auto
+    _headlights_auto = True
     light_sensor.when_deactivated = None
     light_sensor.when_activated = None
     headlights.off()
@@ -232,6 +249,19 @@ def headlights_off():
     headlights_auto_off()
     headlights.off()
 
+# Functions for Flask to chech if it's turned on or turned off
+def get_status():
+    return {
+        "warnblink_activated":        _warn_light_thread is not None and _warn_light_thread.is_alive(),
+        "blinker_links_activated":    _turn_left_active,
+        "blinker_rechts_activated":   _turn_right_active,
+        "blaulicht_activated":        _blue_light_thread is not None and _blue_light_thread.is_alive(),
+        "tagfahrlicht_activated":     day_light.is_lit,
+        "scheinwerfer_activated":     headlights.is_lit,
+        "scheinwerfer_auto":          _headlights_auto,
+        "parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
+        "rueklicht_activated":        _rear_on
+    }
             
 # -------------------------
 # everything off
