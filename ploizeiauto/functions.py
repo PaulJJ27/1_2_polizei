@@ -152,23 +152,18 @@ def _parking_loop():
     while not _parking_stop.is_set():
         cm = dist_sensor.distance * 100
 
-        if cm >= 15 and cm <= 50:
-            peep
-            red.on()
+        if cm <= 50 and cm >= 15:
+            peeep.value = 1
             _parking_stop.wait(cm / 100)
-            red.off()
+            peeep.value = 0
             _parking_stop.wait(cm / 100)
-        else:
-            green.off()
-            red.on()
+        elif cm < 15: 
+            peeep.value = 1
             _parking_stop.wait(0.3)
-            print("Hindernis erkannt")
 
-    green.off()
-    red.off()
+    peeep.value = 0
 
 def parking_on():
-
     global _parking_thread
     if _parking_thread and _parking_thread.is_alive():
         return
