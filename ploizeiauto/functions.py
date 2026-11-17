@@ -16,7 +16,7 @@ light_sensor = DigitalInputDevice(26, pull_up=False)
 headlights = LED(5)
 
 # -------------------------
-# rear lights
+# reverse lights
 # -------------------------
 
 def back_driving_lights_on():
