@@ -3,17 +3,19 @@ from threading import Thread, Event
 import RFID_Sensor
 
 
-rear_light = PWMLED(22) 
-day_light = PWMLED(23) 
-right_blue = PWMLED(17) 
-left_blue = PWMLED(27)
-brakes_light = PWMLED(24)
-warn_light = PWMLED(5)
-turn_right = PWMLED(5)
-turn_left = PWMLED(5)
-back_driving_lights = PWMLED(5)
-light_sensor = DigitalInputDevice(26, pull_up=False)
-headlights = LED(5)
+
+rear_light = PWMLED(12)
+day_light = PWMLED(20)
+right_blue = PWMLED(19)
+left_blue = PWMLED(26)
+brakes_light = PWMLED(13)
+turn_right = PWMLED(23)
+turn_left = PWMLED(24)
+back_driving_lights = PWMLED(27)
+light_sensor = DigitalInputDevice(22, pull_up=False)
+headlights = LED(16)
+dist_sensor = DistanceSensor(echo=6, trigger=5)
+
 
 # -------------------------
 # reverse lights
