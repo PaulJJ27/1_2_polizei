@@ -1,0 +1,1 @@
+python -c "import RFID_Sensor; RFID_Sensor.is_unlocked=True; import flask_app; flask_app.app.run(port=5000)"

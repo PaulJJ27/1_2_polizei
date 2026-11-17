@@ -1,6 +1,8 @@
 from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice, PWMOutputDevice
 from threading import Thread, Event
 import RFID_Sensor
+from time import sleep
+
 
 
 rear_light = PWMLED(12)
@@ -100,15 +102,19 @@ def _warn_light_loop():
 
 def warn_light_on():
     global _warn_light_thread
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     if _warn_light_thread and _warn_light_thread.is_alive():
         return
 
     _warn_light_stop.clear()
-    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     _warn_light_thread.start()
+    print("Warnblinker an")
+    
 
-def warn_light_off():
+def warn_licht_off():
     _warn_light_stop.set()
+    print("Warnblinker aus")
+
 
 # -------------------------
 # blue lights
@@ -144,6 +150,12 @@ def blue_light_off():
 # -------------------------
 # parking sensor
 # -------------------------
+'''
+
+sensor = DistanceSensor(echo=24, trigger=23)
+green = PWMLED(27)
+red = PWMLED(17)
+green_time = 0
 
 _parking_stop = Event()
 _parking_thread = None
@@ -175,6 +187,7 @@ def parking_on():
 def parking_off():
     _parking_stop.set()
 
+    '''
 
 # -------------------------
 # turn signals left or right
@@ -277,11 +290,11 @@ def siren_off():
 
 def turn_off():
     blue_light_off()
-    warn_light_off()
+    warn_licht_off()
     rear_light_off()
     brakes_light_off()
     day_light_off()
-    parking_off()
+    #parking_off()
     headlights_auto_off()
     headlights_off()
     turn_signal_off()
