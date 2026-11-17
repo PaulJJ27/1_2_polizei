@@ -1,7 +1,6 @@
-from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
+from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice, PWMOutputDevice
 from threading import Thread, Event
 import RFID_Sensor
-
 
 
 rear_light = PWMLED(12)
@@ -12,9 +11,12 @@ brakes_light = PWMLED(13)
 turn_right = PWMLED(23)
 turn_left = PWMLED(24)
 back_driving_lights = PWMLED(27)
-light_sensor = DigitalInputDevice(22, pull_up=False)
 headlights = LED(16)
+
+light_sensor = DigitalInputDevice(22, pull_up=False)
 dist_sensor = DistanceSensor(echo=6, trigger=5)
+siren = PWMOutputDevice(21, frequency=700, initial_value=0.5)
+peeep = PWMOutputDevice(21, frequency=500, initial_value=0.5)
 
 
 # -------------------------
@@ -87,11 +89,14 @@ _warn_light_thread = None
 
 def _warn_light_loop():
     while not _warn_light_stop.is_set():
-        warn_light.on()
+        turn_left.on()
+        turn_right.on()
         _warn_light_stop.wait(0.5)
-        warn_light.off()
+        turn_left.off()
+        turn_right.off()
         _warn_light_stop.wait(0.5)
-    warn_light.off()
+    turn_left.off()
+    turn_right.off()
 
 def warn_light_on():
     global _warn_light_thread
@@ -106,7 +111,7 @@ def warn_light_off():
     _warn_light_stop.set()
 
 # -------------------------
-# sirene
+# blue lights
 # -------------------------
 
 _blue_light_stop = Event()
@@ -140,24 +145,15 @@ def blue_light_off():
 # parking sensor
 # -------------------------
 
-sensor = DistanceSensor(echo=24, trigger=23)
-green = PWMLED(27)
-red = PWMLED(17)
-green_time = 0
-
 _parking_stop = Event()
 _parking_thread = None
 
 def _parking_loop():
     while not _parking_stop.is_set():
-        cm = sensor.distance * 100
+        cm = dist_sensor.distance * 100
 
-        if cm >= 50:
-            red.off()
-            green.on()
-            _parking_stop.wait(0.2)
-        elif cm >= 15:
-            green.off()
+        if cm >= 15 and cm <= 50:
+            peep
             red.on()
             _parking_stop.wait(cm / 100)
             red.off()
@@ -252,21 +248,34 @@ def headlights_off():
     headlights_auto_off()
     headlights.off()
 
-# Functions for Flask to chech if it's turned on or turned off
-def get_status():
-    return {
-        "warnblink_activated":        _warn_light_thread is not None and _warn_light_thread.is_alive(),
-        "blinker_links_activated":    _turn_left_active,
-        "blinker_rechts_activated":   _turn_right_active,
-        "blaulicht_activated":        _blue_light_thread is not None and _blue_light_thread.is_alive(),
-        "tagfahrlicht_activated":     day_light.is_lit,
-        "scheinwerfer_activated":     headlights.is_lit,
-        "scheinwerfer_auto":          _headlights_auto,
-        "parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
-        "rueklicht_activated":        _rear_on,
-        "policecar_locked":           RFID_Sensor.is_unlocked == False
-    }
-            
+# -------------------------
+# siren loop  
+# -------------------------
+
+_siren_thread = None
+_siren_stop = Event()
+
+tones = list(range(700, 900, 50)) + list(range(900, 700, -50)) # Tones: 700->750->800..900->850..
+
+def _siren_loop():
+    while not _siren_stop.is_set():
+        for n in tones:
+            siren.frequency = n
+            if _siren_stop.wait(0.1):
+                break
+
+def siren_on():
+    global _siren_thread
+    if _siren_thread and _siren_thread.is_alive():
+        return
+    
+    _siren_thread.clear()
+    _siren_thread = Thread(target=_siren_loop, daemon=True)
+    _siren_thread.start()
+
+def siren_off():
+    _siren_stop.set()
+      
 # -------------------------
 # everything off
 # -------------------------
@@ -282,3 +291,23 @@ def turn_off():
     headlights_off()
     turn_signal_off()
     back_driving_lights_off()
+
+# -------------------------
+# Functions for Flask to chech if it's turned on or turned off
+# -------------------------
+
+def get_status():
+    return {
+        "warnblink_activated":        _warn_light_thread is not None and _warn_light_thread.is_alive(),
+        "blinker_links_activated":    _turn_left_active,
+        "blinker_rechts_activated":   _turn_right_active,
+        "blaulicht_activated":        _blue_light_thread is not None and _blue_light_thread.is_alive(),
+        "tagfahrlicht_activated":     day_light.is_lit,
+        "scheinwerfer_activated":     headlights.is_lit,
+        "scheinwerfer_auto":          _headlights_auto,
+        "parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
+        "rueklicht_activated":        _rear_on,
+        "policecar_locked":           RFID_Sensor.is_unlocked == False,
+        "siren_activated":            _siren_thread is not None and _siren_thread.is_alive()
+    }
+      
