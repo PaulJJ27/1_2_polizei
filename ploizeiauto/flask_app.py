@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request
 import functions
 from jinja2 import Environment
+import RFID_Sensor
 
 app = Flask(__name__)
 
@@ -71,8 +72,25 @@ def control():
         elif "scheinwerfer_off" in request.form:
             functions.headlights_off()
 
+        elif "rfid_button" in request.form:
+            RFID_Sensor.key_check()
+            if RFID_Sensor.is_unlocked == True:
+                functions.day_light_on()
+                functions.rear_light_on()
+
+        #elif RFID_Sensor.
+
+        
+
+
+
         functions.headlights_auto_on()
         functions.headlights_auto_off()
+
+
+
+
+
 
     return render_template(
         "control.html",

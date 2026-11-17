@@ -1,5 +1,6 @@
 from gpiozero import LED, PWMLED, DistanceSensor, DigitalInputDevice
 from threading import Thread, Event
+import RFID_Sensor
 
 
 rear_light = PWMLED(22) 
@@ -260,7 +261,8 @@ def get_status():
         "scheinwerfer_activated":     headlights.is_lit,
         "scheinwerfer_auto":          _headlights_auto,
         "parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
-        "rueklicht_activated":        _rear_on
+        "rueklicht_activated":        _rear_on,
+        "policecar_locked":           RFID_Sensor.is_unlocked == False
     }
             
 # -------------------------

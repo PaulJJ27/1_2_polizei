@@ -8,7 +8,10 @@ status = None
 
 corr = [122, 231, 109, 127, 143]
 
+is_unlocked = False
+
 def key_check():
+    global is_unlocked
     try:
         print("Hold tag near the reader")
         while True:
@@ -25,6 +28,7 @@ def key_check():
         GPIO.cleanup()
 
     if uid == corr:
+        is_unlocked = True
         print("unlock")
 
 while True:
