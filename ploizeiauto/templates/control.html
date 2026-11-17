@@ -115,6 +115,9 @@
     <div class="nfc_display">
 
         {% if policecar_locked %}
+        <form class="nfc_button">
+        <button class="rfid_button" name="rfid_button" value="rfid_button">Chipsensor aktivieren</button>
+        </form>
         <img src="#" alt="Icon policecar locked">
         <h4>Poleizeiauto abgeschlossen</h4>
         {% else %}

@@ -76,15 +76,7 @@ def control():
 
     return render_template(
         "control.html",
-        warnblink_activated = functions._warn_light_thread.is_alive(),
-        blinker_links_activated = functions.is_turn_left_on == True,
-        blinker_rechts_activated = functions.is_turn_right_on == True,
-        blaulicht_activated = functions._blue_light_thread.is_alive(),
-        #sirene_activated = functions.sirene_deactivated,##### Not done
-        tagfahrlicht_activated = functions.day_light_on.is_set(),
-        scheinwerfer_activated = functions.is_headlights_on == True,
-        #policecar_locked = functions.policecar_locked,
-        #reverse = functions.backwards_button.is_set()
+        **functions.get_status()
         )
 
 
