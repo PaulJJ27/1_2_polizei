@@ -17,8 +17,11 @@ light_sensor = DigitalInputDevice(22, pull_up=False)
 dist_sensor = DistanceSensor(echo=6, trigger=5)
 buzzer = PWMOutputDevice(21, frequency=700, initial_value=0)
 siren = buzzer
-peeep = buzzer(frequency=400)
+peeep = buzzer
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3199583d4d5596ae726f6eacf1c2b8280355ba0f
 
 # -------------------------
 # reverse lights
@@ -150,16 +153,21 @@ _parking_stop = Event()
 _parking_thread = None
 
 def _parking_loop():
+    peeep.frequency = 400
+    
     while not _parking_stop.is_set():
         cm = dist_sensor.distance * 100
-
+    
         if cm <= 50 and cm >= 15:
-            peeep.value = 1
+            peeep.value = 0.5
             _parking_stop.wait(cm / 100)
             peeep.value = 0
             _parking_stop.wait(cm / 100)
         elif cm < 15: 
-            peeep.value = 1
+            peeep.value = 0.5
+            _parking_stop.wait(0.3)
+        else:
+            peeep.value = 0
             _parking_stop.wait(0.3)
 
     peeep.value = 0
