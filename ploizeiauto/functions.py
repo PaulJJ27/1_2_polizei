@@ -18,10 +18,6 @@ dist_sensor = DistanceSensor(echo=6, trigger=5)
 buzzer = PWMOutputDevice(21, frequency=700, initial_value=0)
 siren = buzzer
 peeep = buzzer
-<<<<<<< HEAD
-
-=======
->>>>>>> 3199583d4d5596ae726f6eacf1c2b8280355ba0f
 
 # -------------------------
 # reverse lights
