@@ -15,9 +15,9 @@ headlights = LED(16)
 
 light_sensor = DigitalInputDevice(22, pull_up=False)
 dist_sensor = DistanceSensor(echo=6, trigger=5)
-siren = PWMOutputDevice(21, frequency=700, initial_value=0.5)
-peeep = PWMOutputDevice(21, frequency=500, initial_value=0.5)
-
+buzzer = PWMOutputDevice(21, frequency=700, initial_value=0)
+siren = buzzer
+peeep = buzzer(frequency=400)
 
 # -------------------------
 # reverse lights
