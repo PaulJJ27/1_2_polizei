@@ -152,11 +152,6 @@ def blue_light_off():
 # -------------------------
 '''
 
-sensor = DistanceSensor(echo=24, trigger=23)
-green = PWMLED(27)
-red = PWMLED(17)
-green_time = 0
-
 _parking_stop = Event()
 _parking_thread = None
 
@@ -313,7 +308,7 @@ def get_status():
         "tagfahrlicht_activated":     day_light.is_lit,
         "scheinwerfer_activated":     headlights.is_lit,
         "scheinwerfer_auto":          _headlights_auto,
-        "parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
+        #"parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
         "rueklicht_activated":        _rear_on,
         "policecar_locked":           RFID_Sensor.is_unlocked == False,
         "siren_activated":            _siren_thread is not None and _siren_thread.is_alive()
