@@ -2,9 +2,26 @@ from flask import Flask, render_template, redirect, url_for, request
 import functions
 from jinja2 import Environment
 import RFID_Sensor
-import temp_functions
+#import temp_functions
 
 app = Flask(__name__)
+
+def _lock_changed(unlocked):
+    if unlocked:
+        functions.day_light_on()
+        functions.rear_light_on()
+        functions.headlights_auto_on()
+    else:
+        functions.turn_off()
+
+RFID_Sensor.start_reader(_lock_changed)
+
+@app.before_request
+def require_unlock():
+    if request.endpoint == "static":
+        return
+    if not RFID_Sensor.is_unlocked and request.method == "POST":
+        return "", 403
 
 @app.post("/brakelight/an")
 def brake_light_on():
@@ -27,7 +44,7 @@ def control():
             functions.warn_light_on()
 
         elif "warnblink_off" in form:
-            functions.warn_light_off()
+            functions.warn_licht_off()
 
         elif "blinker_links" in form:
             functions.turn_left_on()
@@ -59,30 +76,18 @@ def control():
         elif "scheinwerfer_off" in form:
             functions.headlights_off()
 
-        elif "backwards_button" in form:
+        elif "reverse" in form:
             functions.back_driving_lights_on()
-            functions.parking_on()
+            #functions.parking_on()
                 
-        elif "backwards_button_off" in form:
+        elif "drive" in form:
             functions.back_driving_lights_off()
-            functions.parking_off()
+            #functions.parking_off()
 
        # elif "sirene" in request.form:
             #temp_functions.sirene_on()
         #elif "sirene_off" in request.form:
             #temp_functions.sirene_off()
-
-        elif "rfid_button" in form:
-            RFID_Sensor.key_check()
-            if RFID_Sensor.is_unlocked == True:
-                functions.day_light_on()
-                functions.rear_light_on()
-                functions.headlights_auto_on()
-
-        elif RFID_Sensor.is_unlocked == False:
-            functions.turn_off()
-
-        
 
 
     return render_template(

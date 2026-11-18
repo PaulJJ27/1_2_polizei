@@ -10,8 +10,7 @@ blink_left = PWMLED(24)
 blink_right = PWMLED(23)
 break_light = PWMLED(13)
 rear_lights = PWMLED(12)
-reverse_lights = PWMLED(7)
+reverse_lights = PWMLED(27)
 day_light_sensor = DigitalInputDevice(22, pull_up=False)
-
 dist_sensor = DistanceSensor(echo=6, trigger=5)
 

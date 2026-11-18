@@ -13,7 +13,7 @@
     --ford-med-bright: #1351D8;
     --cyan-neon: #00e5ff;
     --elektro: #00bfff;
-    --cyan_bright: #18ffff;
+    --sophie_blau: #7CB1F7;
     --cyan-intense: #00ffff;
 
 
@@ -88,10 +88,10 @@ h1 {
     max-width: 100%;
     white-space: normal;
     overflow-wrap: anywhere;
-    background-color: var(--elektro);
-    border: 1px solid var(--cyan-intense);
+    background-color: var(--sophie_blau);
+    border: 1px solid var(--sophie_blau);
     border-radius: 15px;
-    color: white;
+    color: black;
 }
 
 /*

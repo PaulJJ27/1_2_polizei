@@ -41,7 +41,7 @@
 
                         brakeButton.setPointerCapture(event.pointerId);
 
-                        sendCommand("/brakelight/on");
+                        sendCommand("/brakelight/an");
                     });
 
                     brakeButton.addEventListener("pointerup", function() {
@@ -59,7 +59,7 @@
             {% if not warnblink_activated %}
             <button class="warnblink" name="warnblink" value="warnblink">Warnblinker aktivieren</button>
             {% else %}
-            <button class="warnblink" name="warnblinamenk_off" value="warnblink_off">Warnblinker deaktivieren</button>
+            <button class="warnblink" name="warnblink_off" value="warnblink_off">Warnblinker deaktivieren</button>
             {% endif %}
 
             {% if not blinker_links_activated %}
@@ -82,7 +82,7 @@
 
         </form>
 
-        <form class="lights">
+        <form class="lights" method="post">
 
             {% if not blaulicht_activated %}
             <button class="blue_light" name="blaulicht" value="blaulicht">Blaulicht aktivieren</button>
