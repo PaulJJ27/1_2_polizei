@@ -5,24 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Police Control | Last Resort</title>
         <link rel="stylesheet" href="../static/css/style.css" > <!-- href="{{ url_for('static', filename='css/style.css') }}" -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:ital,wght@0,300..900;1,300..900&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
 
     </head>
     <body>
 <header>
 
-<h1>Remote Control für die neue <span>Ford-Polizeiauto-Flotte</span></h1>
+<div class="title-wrap">
+<h1>REMOTE CONTROL</h1>
+</div>
 
-<p class="einleitung">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h3>Für die neue <span>Ford-Polizeiauto-Flotte</span></h3>
+
+<p class="einleitung">Erstmal nix hier</p>
 
 </header>
 
 <main>
 
+        <div class="heading-line-drive">
+            <span class="line-drive"></span>
+            <h2>Fahren</h2>
+            <span class="line-drive"></span>
+        </div>
+
     <div class="control_area">
+
+    <div class="drive-control">
 
         <form class="directions" method="post">
 
-            <button class="brake" id="brake_button" type="button">Bremsen</button>
+            {% if not backwards_button_activated %}
+            <button class="reverse normal-button" name="reverse" value="reverse">Rückwärtsgang einlegen</button>
+            {% else %}
+            <button class="reverse normal-button" name="drive" value="drive">Vorwärtsgang einlegen</button>
+            {% endif %}
+
+            <button class="brake normal-button" id="brake_button" type="button">Bremsen</button>
 
             <script>
 
@@ -56,73 +77,102 @@
                     });
             </script>
 
-            {% if not warnblink_activated %}
-            <button class="warnblink" name="warnblink" value="warnblink">Warnblinker aktivieren</button>
-            {% else %}
-            <button class="warnblink" name="warnblink_off" value="warnblink_off">Warnblinker deaktivieren</button>
-            {% endif %}
-
             {% if not blinker_links_activated %}
-            <button class="blink_left" name="blinker_links" value="blinker_links">Blinker links aktivieren</button>
+            <button class="blink_left" name="blinker_links" value="blinker_links">Blinker links</button>
             {% else %}
             <button class="blink_left" name="blinker_links_off" value="blinker_links_off">Blinker links deaktivieren</button>
             {% endif %}
 
+            {% if not warnblink_activated %}
+            <button class="warnblink normal-button" name="warnblink" value="warnblink">Warnblinker aktivieren</button>
+            {% else %}
+            <button class="warnblink normal-button" name="warnblink_off" value="warnblink_off">Warnblinker deaktivieren</button>
+            {% endif %}
+
             {% if not blinker_rechts_activated %}
-            <button class="blink_right" name="blinker_rechts" value="blinker_rechts">Blinker rechts aktivieren</button>
+            <button class="blink_right" name="blinker_rechts" value="blinker_rechts">Blinker rechts</button>
             {% else %}
             <button class="blink_right" name="blinker_rechts_off" value="blinker_rechts_off">Blinker rechts deaktivieren</button>
             {% endif %}
 
-            {% if not backwards_button_activated %}
-            <button class="reverse" name="reverse" value="reverse">Rückwärtsgang einlegen</button>
-            {% else %}
-            <button class="reverse" name="drive" value="drive">Vorwärtsgang einlegen</button>
-            {% endif %}
-
         </form>
+
+        {% if policecar_locked %}
+        <div class="barrier-overlay" aria-hidden="true">
+            <div class="barrier-image">
+                <img src="../img/Absperrband.png" alt="">
+            </div>
+            <div class="barrier-image barrier-image-lower">
+                <img src="../img/Absperrband.png" alt="">
+            </div>
+        </div>
+        {% endif %}
+
+        </div>
+
+            <div class="heading-line-light">
+                <span class="line-light"></span>
+                <h2>Licht</h2>
+                <span class="line-light"></span>
+            </div>
+        
+        <div class="light-control">
 
         <form class="lights" method="post">
 
             {% if not blaulicht_activated %}
-            <button class="blue_light" name="blaulicht" value="blaulicht">Blaulicht aktivieren</button>
+            <button class="blue_light normal-button" name="blaulicht" value="blaulicht">Blaulicht</button>
             {% else %}
-            <button class="blue_light" name="blaulicht_off" value="blaulicht_off">Blaulicht deaktivieren</button>
+            <button class="blue_light normal-button" name="blaulicht_off" value="blaulicht_off">Blaulicht aus</button>
             {% endif %}
 
             {% if not sirene_activated %}
-            <button class="siren" name="sirene" value="sirene">Sirene aktivieren</button>
+            <button class="siren normal-button" name="sirene" value="sirene">Sirene</button>
             {% else %}
-            <button class="siren" name="sirene_off" value="sirene_off">Sirene deaktivieren</button>
+            <button class="siren normal-button" name="sirene_off" value="sirene_off">Sirene aus</button>
             {% endif %}
 
             {% if not tagfahrlicht_activated %}
-            <button class="daylight" name="tagfahrlicht" value="tagfahrlicht">Tagfahrlicht aktivieren</button>
+            <button class="daylight normal-button" name="tagfahrlicht" value="tagfahrlicht">Tagfahrlicht</button>
             {% else %}
-            <button class="daylight" name="tagfahrlicht_off" value="tagfahrlicht_off">Tagfahrlicht deaktivieren</button>
+            <button class="daylight normal-button" name="tagfahrlicht_off" value="tagfahrlicht_off">Tagfahrlicht aus</button>
             {% endif %}
 
             {% if not scheinwerfer_activated %}
-            <button class="spotlight" name="scheinwerfer" value="scheinwerfer">Scheinwerfer aktivieren</button>
+            <button class="spotlight normal-button" name="scheinwerfer" value="scheinwerfer">Scheinwerfer</button>
             {% else %}
-            <button class="spotlight" name="scheinwerfer_off" value="scheinwerfer_off">Scheinwerfer deaktivieren</button>
+            <button class="spotlight normal-button" name="scheinwerfer_off" value="scheinwerfer_off">Scheinwerfer aus</button>
             {% endif %}
 
         </form>
+
+        {% if policecar_locked %}
+        <div class="barrier-overlay" aria-hidden="true">
+            <div class="barrier-image">
+                <img src="../img/Absperrband.png" alt="">
+            </div>
+        </div>
+        {% endif %}
+
+        </div>
 
     </div>
 
     <div class="nfc_display">
 
-        {% if policecar_locked %}
         <form class="nfc_button">
-        <button class="rfid_button" name="rfid_button" value="rfid_button">Chipsensor aktivieren</button>
+        <button class="rfid_button normal-button" name="rfid_button" value="rfid_button">Chipsensor aktivieren</button>
         </form>
+
+        {% if policecar_locked %}
         <img src="#" alt="Icon policecar locked">
         <h4>Poleizeiauto abgeschlossen</h4>
         {% else %}
         <img src="#" alt="Icon policecar unlocked">
         <h4>Poleizeiauto geöffnet</h4>
+        <div class="barrier-image" aria-hidden="true">
+            <img src="../img/Absperrband.png" alt="">
+        </div>
         {% endif %}
 
     </div>
