@@ -9,12 +9,10 @@
 :root{
 
     --ford-dark: #003478;
-    --ford-bright: #3b8fc5;
-    --ford-med-bright: #1351D8;
-    --cyan-neon: #00e5ff;
-    --elektro: #00bfff;
-    --sophie_blau: #7CB1F7;
-    --cyan-intense: #00ffff;
+    --schrift: #DF0505;
+    --anton: "Anton", sans-serif;
+    --this-is-sparta: "League Spartan", sans-serif;
+    --canva: "Figtree", sans-serif;
 
 
 }
@@ -24,22 +22,23 @@ body {
 
     margin: 0;
     width: 100%;
-    padding: 20px;
+    /*padding: 20px;*/
 
 }
 
 body {
 
     min-height: 100vh;
-
-    background: radial-gradient(
-        circle at center,
-        /*var(--ford-bright) 10%,*/
-        var(--ford-bright) 1%,
-        var(--ford-med-bright) 30%,
-        var(--ford-dark) 80%
-    );
+    background-color: #02122e;
+    background-image:
+        linear-gradient(to bottom, transparent 1436px, #041949 1536px, #02122e 1936px),
+        url("../../img/blau_textur_hintergrund.jpg");
+    background-size: 100% 1936px, auto;
+    background-position: top left;
+    background-repeat: no-repeat, repeat-x;
     color: white;
+    font-family: var(--anton)
+
 
 }
 
@@ -48,6 +47,22 @@ main,
 
     width: 100%;
     max-width: 100%;
+
+}
+
+.drive-control,
+.light-control {
+
+position: relative;
+width: 80%;
+max-width: 610px;
+padding: 0;
+
+}
+
+.drive-control {
+
+margin-top: 16px;
 
 }
 
@@ -60,38 +75,172 @@ header {
 
 }
 
-h1 {
 
-    text-align: center;
+h1 {
+  background-image: url("../../img/blaulicht_horizontal_web.png");
+  background-size: auto 100px;     /* Blaulicht ist 50px hoch, Breite automatisch */
+  background-position: -20px 15px;    /* 20px von links, ganz oben */
+  background-repeat: no-repeat;
+  padding-top: 60px;
+  font-weight: 300;              /* schiebt den Text unter das Blaulicht */
+}
+
+h3 {
+
+font-family: var(--canva);
+font-weight: 100;
 
 }
 
 .einleitung {
 
     text-align: center;
+    margin-bottom: 35px;
+    font-weight: 100;
 
 }
+
+.heading-line-drive {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.heading-line-drive .line-drive {
+  flex: 1;
+  height: 4px;
+  background-color: white;
+}
+
+.heading-line-drive .line-drive:first-child {
+  flex: 1;
+}
+
+.heading-line-drive .line-drive:last-child {
+  flex: 3.5;
+}
+
+.heading-line-drive h2 {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 200;
+  font-size: clamp(24px, 6vw, 48px);
+  text-transform: uppercase;
+}
+
+
+
+.heading-line-light {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.heading-line-light .line-light {
+  flex: 1;
+  height: 4px;
+  background-color: white;
+}
+
+.heading-line-light .line-light:first-child {
+  flex: 2;
+}
+
+.heading-line-light .line-light:last-child {
+  flex: 0.6;
+}
+
+.heading-line-light h2 {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 200;
+  font-size: clamp(24px, 6vw, 48px);
+  text-transform: uppercase;
+}
+
+
 
 
 /* Gesamter Bereich für beide Button-Gruppen */
 .control_area {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: clamp(16px, 4vw, 32px);
 }
 
-.directions button,
-.lights button {
+.normal-button {
 
-    min-width: 0;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    background-color: var(--sophie_blau);
-    border: 1px solid var(--sophie_blau);
-    border-radius: 15px;
-    color: black;
+box-sizing: border-box;   
+padding: 0 20px;
+margin: 0;
+width: 150px;
+height: 35px;
+
+background-image: url("../../img/button_normal.png");
+background-size: 100% 100%;
+background-repeat: no-repeat;
+background-color: transparent;
+border: none;
+
+color: var(--schrift);
+font-family: var(--anton);
+font-size: 13px;
+font-weight: 150;
+text-transform: uppercase;
+line-height: 1.2;
+cursor: pointer;
+}
+
+.blink_right {
+
+box-sizing: border-box;   
+padding: 0 20px;
+margin: 0;
+width: 150px;
+height: 35px;
+
+background-image: url("../../img/button_pfeil_rechts.png");
+background-size: 100% 100%;
+background-repeat: no-repeat;
+background-color: transparent;
+border: none;
+
+color: var(--schrift);
+font-family: var(--anton);
+font-size: 13px;
+font-weight: 150;
+text-transform: uppercase;
+line-height: 1.2;
+cursor: pointer;
+
+}
+
+.blink_left {
+
+box-sizing: border-box;   
+padding: 0 20px;
+margin: 0;
+width: 150px;
+height: 35px;
+
+background-image: url("../../img/button_pfeil_links.png");
+background-size: 100% 100%;
+background-repeat: no-repeat;
+background-color: transparent;
+border: none;
+
+color: var(--schrift);
+font-family: var(--anton);
+font-size: 13px;
+font-weight: 150;
+text-transform: uppercase;
+line-height: 1.2;
+cursor: pointer;
+
 }
 
 /*
@@ -104,44 +253,50 @@ h1 {
 }
 */
 
-/* Raute: Bremsen oben, Blinker links/rechts, Warnblinker Mitte, Rückwärts unten */
 .directions {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(3, auto);
-    gap: 0.5rem;
-
+    gap: clamp(8px, 2.2vw, 17px) clamp(12px, 4.4vw, 34px);
     width: 100%;
-    max-width: 32rem;
-    padding-inline: 0.75rem;
 }
 
-/* Bremsen */
+.directions button,
+.lights button {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2.8;
+    padding-inline: clamp(8px, 2.6vw, 20px);
+    font-size: clamp(12px, 4vw, 32px);
+    align-self: center;
+}
+
+.directions .reverse {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
 .directions .brake {
+    grid-column: 1;
+    grid-row: 2 / 4;
+}
+
+.directions .reverse,
+.directions .brake {
+    transform: translateY(calc(-1 * clamp(8px, 2.2vw, 17px)));
+}
+
+.directions .blink_left {
     grid-column: 2;
     grid-row: 1;
 }
 
-/* Warnblinker */
 .directions .warnblink {
     grid-column: 2;
     grid-row: 2;
 }
 
-/* Blinker links */
-.directions .blink_left {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-/* Blinker rechts */
 .directions .blink_right {
-    grid-column: 3;
-    grid-row: 2;
-}
-
-/* Rückwärtsgang */
-.directions .reverse {
     grid-column: 2;
     grid-row: 3;
 }
@@ -151,11 +306,9 @@ h1 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(2, auto);
-    gap: 0.5rem;
+    gap: clamp(8px, 2.2vw, 17px) clamp(12px, 4.4vw, 34px);
 
     width: 100%;
-    max-width: 32rem;
-    padding-inline: 0.75rem;
 }
 
 /* Blaulicht: links oben */
@@ -188,7 +341,54 @@ display: flex;
 justify-content: center;
 flex-direction: column;
 align-items: center;
+gap: 0.75rem;
+margin-top: clamp(24px, 5vw, 40px);
 
+}
+
+.nfc_button {
+    width: min(38%, 288px);
+}
+
+.nfc_button .rfid_button {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2.8;
+    padding-inline: clamp(8px, 2.6vw, 20px);
+    font-size: clamp(12px, 4vw, 32px);
+}
+
+.barrier-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.barrier-overlay .barrier-image {
+    grid-area: 1 / 1;
+    width: 125%;
+}
+
+.barrier-overlay .barrier-image-lower {
+    transform: translateY(45%);
+}
+
+.barrier-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.barrier-image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 56.25%;
+    height: 177.7778%;
+    transform: translate(-50%, -50%) rotate(-90deg) scaleX(-1);
 }
 
 footer {
