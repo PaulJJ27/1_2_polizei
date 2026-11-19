@@ -25,11 +25,13 @@ def require_unlock():
 
 @app.post("/brakelight/an")
 def brake_light_on():
+    print("POST empfangen: brakelight an")
     functions.brakes_light_on()
     return "", 204
 
 @app.post("/brakelight/off")
 def brake_light_off():
+    print("POST empfangen: brakelight off")
     functions.brakes_light_off()
     return "", 204
 
@@ -39,6 +41,7 @@ def control():
 
     if request.method == "POST":
         form = request.form
+        print("POST empfangen:", list(form.keys()))
 
         if "warnblink" in form:
             functions.warn_light_on()
@@ -78,16 +81,16 @@ def control():
 
         elif "reverse" in form:
             functions.back_driving_lights_on()
-            #functions.parking_on()
+            functions.parking_on()
                 
         elif "drive" in form:
             functions.back_driving_lights_off()
-            #functions.parking_off()
+            functions.parking_off()
 
-       # elif "sirene" in request.form:
-            #temp_functions.sirene_on()
-        #elif "sirene_off" in request.form:
-            #temp_functions.sirene_off()
+        elif "sirene" in request.form:
+            functions.siren_on()
+        elif "sirene_off" in request.form:
+            functions.siren_off()
 
 
     return render_template(
@@ -98,5 +101,3 @@ def control():
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=False)
-
-

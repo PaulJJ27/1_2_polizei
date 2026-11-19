@@ -100,10 +100,10 @@
         {% if policecar_locked %}
         <div class="barrier-overlay" aria-hidden="true">
             <div class="barrier-image">
-                <img src="../img/Absperrband.png" alt="">
+                <img src="../static/img/Absperrband.png" alt="">
             </div>
             <div class="barrier-image barrier-image-lower">
-                <img src="../img/Absperrband.png" alt="">
+                <img src="../static/img/Absperrband.png" alt="">
             </div>
         </div>
         {% endif %}
@@ -127,7 +127,7 @@
             {% endif %}
 
             {% if not sirene_activated %}
-            <button class="siren normal-button" name="sirene" value="sirene">Sirene</button>
+            <button class="siren normal-button" name="sirene" value="sirene">Sirene an</button>
             {% else %}
             <button class="siren normal-button" name="sirene_off" value="sirene_off">Sirene aus</button>
             {% endif %}
@@ -149,7 +149,7 @@
         {% if policecar_locked %}
         <div class="barrier-overlay" aria-hidden="true">
             <div class="barrier-image">
-                <img src="../img/Absperrband.png" alt="">
+                <img src="../static/img/Absperrband.png" alt="">
             </div>
         </div>
         {% endif %}
@@ -171,7 +171,7 @@
         <img src="#" alt="Icon policecar unlocked">
         <h4>Poleizeiauto geöffnet</h4>
         <div class="barrier-image" aria-hidden="true">
-            <img src="../img/Absperrband.png" alt="">
+            <img src="../static/img/Absperrband.png" alt="">
         </div>
         {% endif %}
 

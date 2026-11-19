@@ -32,7 +32,7 @@ body {
     background-color: #02122e;
     background-image:
         linear-gradient(to bottom, transparent 1436px, #041949 1536px, #02122e 1936px),
-        url("../../img/blau_textur_hintergrund.jpg");
+        url("../img/blau_textur_hintergrund.jpg");
     background-size: 100% 1936px, auto;
     background-position: top left;
     background-repeat: no-repeat, repeat-x;
@@ -77,7 +77,7 @@ header {
 
 
 h1 {
-  background-image: url("../../img/blaulicht_horizontal_web.png");
+  background-image: url("../img/blaulicht_horizontal_web.png");
   background-size: auto 100px;     /* Blaulicht ist 50px hoch, Breite automatisch */
   background-position: -20px 15px;    /* 20px von links, ganz oben */
   background-repeat: no-repeat;
@@ -180,7 +180,7 @@ margin: 0;
 width: 150px;
 height: 35px;
 
-background-image: url("../../img/button_normal.png");
+background-image: url("../img/button_normal.png");
 background-size: 100% 100%;
 background-repeat: no-repeat;
 background-color: transparent;
@@ -203,7 +203,7 @@ margin: 0;
 width: 150px;
 height: 35px;
 
-background-image: url("../../img/button_pfeil_rechts.png");
+background-image: url("../img/button_pfeil_rechts.png");
 background-size: 100% 100%;
 background-repeat: no-repeat;
 background-color: transparent;
@@ -227,7 +227,7 @@ margin: 0;
 width: 150px;
 height: 35px;
 
-background-image: url("../../img/button_pfeil_links.png");
+background-image: url("../img/button_pfeil_links.png");
 background-size: 100% 100%;
 background-repeat: no-repeat;
 background-color: transparent;

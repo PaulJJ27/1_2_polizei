@@ -27,11 +27,17 @@ peeep = buzzer
 # reverse lights
 # -------------------------
 
+reverse_lights_on = False
+
 def back_driving_lights_on():
+    global reverse_lights_on
     back_driving_lights.value = 1
+    reverse_lights_on = True
 
 def back_driving_lights_off():
+    global reverse_lights_on
     back_driving_lights.value = 0
+    reverse_lights_on = False
 
 # -------------------------
 # rear lights
@@ -104,11 +110,11 @@ def _warn_light_loop():
 
 def warn_light_on():
     global _warn_light_thread
-    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     if _warn_light_thread and _warn_light_thread.is_alive():
         return
 
     _warn_light_stop.clear()
+    _warn_light_thread = Thread(target=_warn_light_loop, daemon=True)
     _warn_light_thread.start()
     print("Warnblinker an")
     
@@ -245,7 +251,7 @@ def headlights_auto_on():
 # Function that will be used to turn off auto mode for headlights
 def headlights_auto_off():
     global _headlights_auto
-    _headlights_auto = True
+    _headlights_auto = False
     light_sensor.when_deactivated = None
     light_sensor.when_activated = None
     headlights.off()
@@ -279,7 +285,7 @@ def siren_on():
     if _siren_thread and _siren_thread.is_alive():
         return
     
-    _siren_thread.clear()
+    _siren_stop.clear()
     _siren_thread = Thread(target=_siren_loop, daemon=True)
     _siren_thread.start()
 
@@ -296,7 +302,7 @@ def turn_off():
     rear_light_off()
     brakes_light_off()
     day_light_off()
-    #parking_off()
+    parking_off()
     headlights_auto_off()
     headlights_off()
     turn_signal_off()
@@ -315,9 +321,8 @@ def get_status():
         "tagfahrlicht_activated":     day_light.is_lit,
         "scheinwerfer_activated":     headlights.is_lit,
         "scheinwerfer_auto":          _headlights_auto,
-        #"parksensor_activated":       _parking_thread is not None and _parking_thread.is_alive(),
-        "rueklicht_activated":        _rear_on,
+        "backwards_button_activated": _parking_thread is not None and _parking_thread.is_alive() and reverse_lights_on == True,
         "policecar_locked":           RFID_Sensor.is_unlocked == False,
-        "siren_activated":            _siren_thread is not None and _siren_thread.is_alive()
+        "sirene_activated":           _siren_thread is not None and _siren_thread.is_alive()
     }
       
